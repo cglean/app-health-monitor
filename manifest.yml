@@ -1,0 +1,12 @@
+applications:
+- name: app-health
+  memory: 512M
+  random-route: false
+  env:
+    TRUST_CERTS: api.labsysash.inbcu.com
+    http_proxy: proxy.inbcu.com:7070/proxy.pac
+    https_proxy: proxy.inbcu.com:7070/proxy.pac
+
+
+ 
+path: target/pcf-0.0.1-SNAPSHOT.jar

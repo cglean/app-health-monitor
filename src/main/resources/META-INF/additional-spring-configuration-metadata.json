@@ -1,0 +1,107 @@
+{"properties": [
+  {
+    "name": "AOA.password",
+    "type": "java.lang.String",
+    "description": "A description for 'AOA.password'"
+  },
+  {
+    "name": "DEVASH.password",
+    "type": "java.lang.String",
+    "description": "A description for 'DEVASH.password'"
+  },
+  {
+    "name": "ASH.password",
+    "type": "java.lang.String",
+    "description": "A description for 'ASH.password'"
+  },
+  {
+    "name": "DEVUSH.password",
+    "type": "java.lang.String",
+    "description": "A description for 'DEVUSH.password'"
+  },
+  {
+    "name": "DEVUSH.password",
+    "type": "java.lang.String",
+    "description": "A description for 'DEVUSH.password'"
+  },
+  {
+    "name": "USH.password",
+    "type": "java.lang.String",
+    "description": "A description for 'USH.password'"
+  },
+  {
+    "name": "DEVUSZ.password",
+    "type": "java.lang.String",
+    "description": "A description for 'DEVUSZ.password'"
+  },
+  {
+    "name": "USZ.password",
+    "type": "java.lang.String",
+    "description": "A description for 'USZ.password'"
+  },
+  {
+    "name": "DEVASZ.password",
+    "type": "java.lang.String",
+    "description": "A description for 'DEVASZ.password'"
+  },
+  {
+    "name": "ASZ.password",
+    "type": "java.lang.String",
+    "description": "A description for 'ASZ.password'"
+  },
+  {
+    "name": "DEVAOA.apiURL",
+    "type": "java.lang.String",
+    "description": "A description for 'DEVAOA.apiURL'"
+  },
+  {
+    "name": "DEVAOA.password",
+    "type": "java.lang.String",
+    "description": "A description for 'DEVAOA.password'"
+  },
+  {
+    "name": "AOA.apiURL",
+    "type": "java.lang.String",
+    "description": "A description for 'AOA.apiURL'"
+  },
+  {
+    "name": "DEVASH.apiURL",
+    "type": "java.lang.String",
+    "description": "A description for 'DEVASH.apiURL'"
+  },
+  {
+    "name": "DEVUSZ.apiURL",
+    "type": "java.lang.String",
+    "description": "A description for 'DEVUSZ.apiURL'"
+  },
+  {
+    "name": "DEVASZ.apiURL",
+    "type": "java.lang.String",
+    "description": "A description for 'DEVASZ.apiURL'"
+  },
+  {
+    "name": "ASZ.apiURL",
+    "type": "java.lang.String",
+    "description": "A description for 'ASZ.apiURL'"
+  },
+  {
+    "name": "USZ.apiURL",
+    "type": "java.lang.String",
+    "description": "A description for 'USZ.apiURL'"
+  },
+  {
+    "name": "USH.apiURL",
+    "type": "java.lang.String",
+    "description": "A description for 'USH.apiURL'"
+  },
+  {
+    "name": "DEVUSH.apiURL",
+    "type": "java.lang.String",
+    "description": "A description for 'DEVUSH.apiURL'"
+  },
+  {
+    "name": "ASH.apiURL",
+    "type": "java.lang.String",
+    "description": "A description for 'ASH.apiURL'"
+  }
+]}
