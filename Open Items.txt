@@ -1,4 +1,5 @@
 Open Items
 ---------------------------------------------------------------
 1. UAAC CLients - using read only admin creds
+2. change the credentials
 
