@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.inbcu.vo.CFApplication;
+import com.nbcu.vo.CFApplication;
 
 public interface ApplicationHealthService {
 	public List<String> getOrganizationsForFoundation(String foundationName);

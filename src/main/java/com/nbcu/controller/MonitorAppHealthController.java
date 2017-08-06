@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inbcu.vo.CFApplication;
 import com.nbcu.service.ApplicationHealthService;
+import com.nbcu.vo.CFApplication;
 
 @RestController
 public class MonitorAppHealthController {

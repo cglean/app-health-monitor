@@ -2,9 +2,9 @@
  * 
  */
 var getFoundationsList = function() {
-	// $("body").fadeOut();
-	$("#overlay").show();
+	//$("body").fadeOut();
 	$("#ajaxLoader").css("display", "block");
+	$("#overlay").show();
 	$.ajax({
 		url : "getFoundationsList",
 		success : function(data) {
@@ -13,6 +13,7 @@ var getFoundationsList = function() {
 						"<option>" + "No Foundations Available" + "</option>");
 				$("#overlay").hide();
 				$("#ajaxLoader").css("display", "none");
+				$("#overlay").css("display", "none");;				
 			} else {
 				populateFoundationDropDown(data);
 			}
@@ -25,28 +26,14 @@ var populateFoundationDropDown = function(vals) {
 	$.each(vals, function(index, value) {
 		$("#FoundationSelect").append("<option>" + value + "</option>");
 	});
-	$("#FoundationSelect")
-			.unbind()
-			.change(
-					function() {
+	$("#FoundationSelect").unbind().change(function() {
 						$("#ajaxLoader").css("display", "block");
-						$
-								.ajax({
-									url : "getOrgList/"
-											+ $(
-													"#FoundationSelect option:selected")
-													.text(),
-									success : function(data) {
+						$.ajax({url : "getOrgList/"+ $("#FoundationSelect option:selected").text(), success : function(data) {
 										if (data.length === 0) {
-											$("#OrgSelect").empty();
-											$("#OrgSelect")
-													.append(
-															"<option>"
-																	+ "No Orgs Available in this Foundation"
-																	+ "</option>");
-											$("#overlay").hide();
-											$("#ajaxLoader").css("display",
-													"none");
+											resetFields();
+											resetApplicationInfo();
+											$("#ajaxLoader").css("display","none");
+											$("#overlay").css("display", "none");;
 										} else {
 											populateOrgDropDown(data);
 										}
@@ -57,7 +44,9 @@ var populateFoundationDropDown = function(vals) {
 			|| $("#FoundationSelect option:selected").text() === undefined
 			|| $("#FoundationSelect option:selected").text() === null
 			|| $("#FoundationSelect option:selected").text() === "No Foundations Available") {
-		return;
+				resetFields();
+				resetApplicationInfo();
+				return;
 	} else {
 		$("#overlay").show();
 		$("#ajaxLoader").css("display", "block");
@@ -67,14 +56,10 @@ var populateFoundationDropDown = function(vals) {
 							+ $("#FoundationSelect option:selected").text(),
 					success : function(data) {
 						if (data.length === 0) {
-							$("#OrgSelect").empty();
-							$("#OrgSelect")
-									.append(
-											"<option>"
-													+ "No Orgs Available in this Foundation"
-													+ "</option>");
-							$("#overlay").hide();
+							resetFields();
+							resetApplicationInfo();
 							$("#ajaxLoader").css("display", "none");
+							$("#overlay").css("display", "none");;
 						} else {
 							populateOrgDropDown(data);
 						}
@@ -88,11 +73,10 @@ var getOrganisations = function() {
 		url : "getOrgList",
 		success : function(data) {
 			if (data.length === 0) {
-				$("#OrgSelect").append(
-						"<option>" + "No Orgs Available in this Foundation"
-								+ "</option>");
-				$("#overlay").hide();
+				resetFields();
+				resetApplicationInfo();
 				$("#ajaxLoader").css("display", "none");
+				$("#overlay").css("display", "none");;
 			} else {
 				populateOrgDropDown(data);
 			}
@@ -110,43 +94,29 @@ var populateOrgDropDown = function(vals) {
 			.change(
 					function() {
 						if ($("#OrgSelect option:selected").text() === "All") {
-							$('#applicationContainerHealthTable tbody').empty();
 							$("#OrgSpace").empty();
-							$("#OrgSpace")
-									.append(
-											"<option>" + "Select a Space"
-													+ "</option>");
+							$("#OrgSpace").append("<option>"+ "Select a Space" + "</option>");
 							$("#Application").empty();
-							$("#Application").append(
-									"<option>" + "Select an Application"
-											+ "</option>");
+							$("#Application").append("<option>"	+ "Select an Application"	+ "</option>");
+							resetApplicationInfo();
+							$('#applicationContainerHealthTable tbody').empty();
 							$("#downloadInventory").css("display", "block");
-							$("#overlay").hide();
+							$("#overlay").css("display", "none");;
 							$("#ajaxLoader").css("display", "none");
-
 							return;
 						} else {
 							$("#downloadInventory").css("display", "none");
 							$("#overlay").show();
 							$("#ajaxLoader").css("display", "block");
-							$
-									.ajax({
-										url : "getSpaceList/"
-												+ $(
-														"#FoundationSelect option:selected")
-														.text()
-												+ "/"
-												+ $(
-														"#OrgSelect option:selected")
-														.text(),
+							$.ajax({url : "getSpaceList/"+ $("#FoundationSelect option:selected").text()+ "/"+ $("#OrgSelect option:selected").text(),
 										success : function(data) {
 											if (data.length === 0) {
 												$("#OrgSpace").empty();
-												$("#OrgSpace")
-														.append(
-																"<option>"
-																		+ "No Spaces Available in this Org"
-																		+ "</option>");
+												$("#OrgSpace").append("<option>"+ "No Spaces Available"+ "</option>");
+												$("#Application").empty();
+												$("#Application").append("<option>"	+ "No Applications Available"	+ "</option>");
+												resetApplicationInfo();
+												$('#applicationContainerHealthTable tbody').empty();
 												$("#ajaxLoader").css("display",
 														"none");
 											} else {
@@ -158,15 +128,22 @@ var populateOrgDropDown = function(vals) {
 					});
 	if ($("#OrgSelect option:selected").text() === ""
 			|| $("#OrgSelect option:selected").text() === undefined
-			|| $("#OrgSelect option:selected").text() === null) {
+			|| $("#OrgSelect option:selected").text() === null
+			|| $("#OrgSelect option:selected").text() === "No Orgs Available") {
+		$("#OrgSpace").empty();
+		$("#OrgSpace").append("<option>"+ "No Spaces Available" + "</option>");
+		$("#Application").empty();
+		$("#Application").append("<option>"	+ "No Applications Available"	+ "</option>");
+		resetApplicationInfo();
+		$('#applicationContainerHealthTable tbody').empty();
 		return;
 	} else if ($("#OrgSelect option:selected").text() === "All") {
 		$('#applicationContainerHealthTable tbody').empty();
 		$("#OrgSpace").empty();
 		$("#OrgSpace").append("<option>" + "Select a Space" + "</option>");
 		$("#Application").empty();
-		$("#Application").append(
-				"<option>" + "Select an Application" + "</option>");
+		resetApplicationInfo();
+		$("#Application").append("<option>" + "Select an Application" + "</option>");
 		$("#downloadInventory").css("display", "block");
 		$("#overlay").hide();
 		$("#ajaxLoader").css("display", "none");
@@ -176,15 +153,16 @@ var populateOrgDropDown = function(vals) {
 		$("#overlay").show();
 		$("#ajaxLoader").css("display", "block");
 		$.ajax({
-			url : "getSpaceList/"
-					+ $("#FoundationSelect option:selected").text() + "/"
-					+ $("#OrgSelect option:selected").text(),
+			url : "getSpaceList/"+ $("#FoundationSelect option:selected").text() + "/"+ $("#OrgSelect option:selected").text(),
 			success : function(data) {
 				if (data.length === 0) {
 					$("#OrgSpace").empty();
-					$("#OrgSpace").append(
-							"<option>" + "No Spaces Available in this Org"
-									+ "</option>");
+					$("#OrgSpace").append("<option>" + "No Spaces Available"+ "</option>");
+					$("#Application").empty();
+					$("#Application").append("<option>"	+ "No Applications Available"	+ "</option>");
+					resetApplicationInfo();
+					$('#applicationContainerHealthTable tbody').empty();
+					$("#overlay").hide();
 					$("#ajaxLoader").css("display", "none");
 				} else {
 					populateSpaceDropDown(data);
@@ -202,31 +180,18 @@ var populateSpaceDropDown = function(vals) {
 			.unbind()
 			.change(
 					function() {
-						$("#overlay").show();
 						$("#ajaxLoader").css("display", "block");
-						$
-								.ajax({
-									url : "getApplicationListByOrgSpace/"
-											+ $(
-													"#FoundationSelect option:selected")
-													.text()
-											+ "/"
-											+ $("#OrgSelect option:selected")
-													.text()
-											+ "/"
-											+ $("#OrgSpace option:selected")
-													.text(),
+						$("#overlay").show();
+						$.ajax({url : "getApplicationListByOrgSpace/"+ $("#FoundationSelect option:selected").text()+ "/"+ 
+							$("#OrgSelect option:selected").text()+ "/"+ $("#OrgSpace option:selected").text(),
 									success : function(data) {
 										if (data.length === 0) {
 											$("#Application").empty();
-											$("#Application")
-													.append(
-															"<option>"
-																	+ "No Applications Available in this Org and Space"
-																	+ "</option>");
-											$("#overlay").hide();
+											$("#Application").append("<option>"+ "No Applications Available"+ "</option>");
+											resetApplicationInfo();
+											$('#applicationContainerHealthTable tbody').empty();
 											$("#ajaxLoader").css("display",	"none");
-
+											$("#overlay").hide();
 										} else {
 											populateApplicationDropDown(data);
 										}
@@ -235,27 +200,29 @@ var populateSpaceDropDown = function(vals) {
 					});
 	if ($("#OrgSpace option:selected").text() === ""
 			|| $("#OrgSpace option:selected").text() === undefined
-			|| $("#OrgSpace option:selected").text() === null) {
-		return;
+			|| $("#OrgSpace option:selected").text() === null
+			|| $("#OrgSpace option:selected").text() === "No Spaces Available") {
+			$("#Application").empty();
+			$("#Application").append("<option>"+ "No Applications Available"+ "</option>");
+			resetApplicationInfo();
+			$('#applicationContainerHealthTable tbody').empty();
+			$("#ajaxLoader").css("display",	"none");
+			$("#overlay").hide();
+			return;
 	} else {
-		$("#overlay").show();
 		$("#ajaxLoader").css("display", "block");
+		$("#overlay").show();
 		$
 				.ajax({
-					url : "getApplicationListByOrgSpace/"
-							+ $("#FoundationSelect option:selected").text()
-							+ "/" + $("#OrgSelect option:selected").text()
-							+ "/" + $("#OrgSpace option:selected").text(),
-					success : function(data) {
+					url : "getApplicationListByOrgSpace/"+ $("#FoundationSelect option:selected").text()+ "/" + $("#OrgSelect option:selected").text()
+							+ "/" + $("#OrgSpace option:selected").text(),success : function(data) {
 						if (data.length === 0) {
 							$("#Application").empty();
-							$("#Application")
-									.append(
-											"<option>"
-													+ "No Applications Available in this Org and Space"
-													+ "</option>");
-							$("#overlay").hide();
+							$("#Application").append("<option>"+ "No Applications Available"+ "</option>");
+							resetApplicationInfo();
+							$('#applicationContainerHealthTable tbody').empty();
 							$("#ajaxLoader").css("display", "none");
+							$("#overlay").hide();
 
 						} else {
 							populateApplicationDropDown(data);
@@ -272,30 +239,27 @@ var populateApplicationDropDown = function(vals) {
 
 	$("#Application").unbind().change(
 			function() {
-				$("#overlay").show();
 				$("#ajaxLoader").css("display", "block");
-				$.ajax({
-					url : "getApplicationDetails/"
-							+ $("#FoundationSelect option:selected").text()
-							+ "/" + $("#OrgSelect option:selected").text()
-							+ "/" + $("#OrgSpace option:selected").text() + "/"
-							+ $("#Application option:selected").text(),
+				$("#overlay").show();
+				$.ajax({url : "getApplicationDetails/"+ $("#FoundationSelect option:selected").text()+ "/" + $("#OrgSelect option:selected").text()
+							+ "/" + $("#OrgSpace option:selected").text() + "/"+ $("#Application option:selected").text(),
 					success : function(data) {
 						populateApplicationDetails(data);
-						$("#overlay").hide();
 						$("#ajaxLoader").css("display", "none");
+						$("#overlay").hide();
 					}
 				});
 			});
 	if ($("#Application option:selected").text() === ""
 			|| $("#Application option:selected").text() === undefined
 			|| $("#Application option:selected").text() === null
-			|| $("#Application option:selected").text() === "No Applications Available in this Org and Space") {
+			|| $("#Application option:selected").text() === "No Applications Available") {
+		resetApplicationInfo();
 		$('#applicationContainerHealthTable tbody').empty();
 		return;
 	} else {
-		$("#overlay").show();
 		$("#ajaxLoader").css("display", "block");
+		$("#overlay").show();
 		$.ajax({
 			url : "getApplicationDetails/"
 					+ $("#FoundationSelect option:selected").text() + "/"
@@ -304,8 +268,8 @@ var populateApplicationDropDown = function(vals) {
 					+ $("#Application option:selected").text(),
 			success : function(data) {
 				populateApplicationDetails(data);
+				$("#ajaxLoader").css("display", "none");	
 				$("#overlay").hide();
-				$("#ajaxLoader").css("display", "none");
 			}
 		});
 	}
@@ -341,10 +305,10 @@ var populateApplicationDetails = function(vals) {
 }
 
 // Download Inventory
-var downloadInventory = function() {
+var downloadInventory = function(response) {
 	var foundationName = $("#FoundationSelect option:selected").text();
-	$("#overlay").show();
 	$("#ajaxLoader").css("display", "block");
+	$("#overlay").show();
 	$.ajax({
 		url : "downloadInventory/"
 				+ $("#FoundationSelect option:selected").text(),
@@ -358,4 +322,21 @@ var downloadInventory = function() {
 			}
 		}
 	});
+}
+
+var resetFields = function (){
+	$("#OrgSelect").empty();
+	$("#OrgSelect").append("<option>"+ "No Orgs Available"+ "</option>");
+	$("#OrgSpace").empty();
+	$("#OrgSpace").append("<option>"+ "No Spaces Available" + "</option>");
+	$("#Application").empty();
+	$("#Application").append("<option>"	+ "No Applications Available"	+ "</option>");
+	$('#applicationContainerHealthTable tbody').empty();
+}
+var resetApplicationInfo = function(){
+	$("#applicationName").html("");
+	$("#applicationState").html("");
+	$("#buildpackName").html("");
+	$("#noOfInstances").html("");
+	$("#noOfRunningInstances").html("");
 }

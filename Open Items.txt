@@ -1,0 +1,4 @@
+Open Items
+---------------------------------------------------------------
+1. UAAC CLients - using read only admin creds
+

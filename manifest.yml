@@ -1,12 +1,8 @@
 applications:
-- name: app-health
+- name: app-health-monitor
   memory: 512M
   random-route: false
   env:
     TRUST_CERTS: api.labsysash.inbcu.com
-    http_proxy: proxy.inbcu.com:7070/proxy.pac
-    https_proxy: proxy.inbcu.com:7070/proxy.pac
-
-
- 
+    JAVA_OPTS: '-Djavax.net.ssl.TrustStore=classpath:resources/config/truststore'
 path: target/pcf-0.0.1-SNAPSHOT.jar
